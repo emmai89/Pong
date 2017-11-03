@@ -5,6 +5,7 @@ import java.awt.image.BufferStrategy;
 
 import dev.pong.display.Display;
 import dev.pong.input.Input;
+import dev.pong.objects.Ball;
 import dev.pong.objects.Object;
 import dev.pong.objects.Player;
 
@@ -21,7 +22,7 @@ public class Game implements Runnable
 	private Graphics g;
 	
 	//objects
-	Object player1, player2;
+	Object player1, player2, ball;
 	
 	
 	//Input
@@ -53,6 +54,7 @@ public class Game implements Runnable
 		
 		player1 = new Player(10, 300, 20, 100, 1);
 		player2 = new Player(670, 300, 20, 100, 2);
+		ball = new Ball(width/2, height/2, 10, 10, this);
 		
 		/*gameState = new GameState(handler);
 		menuState = new MenuState(handler);
@@ -63,6 +65,7 @@ public class Game implements Runnable
 	{
 		input.tick();
 		
+		ball.tick();
 		player1.tick();
 		player2.tick();
 		
@@ -83,7 +86,7 @@ public class Game implements Runnable
 		
 		player1.render(g);
 		player2.render(g);;
-		
+		ball.render(g);
 		//End dreawing!
 		bs.show();
 		g.dispose();
@@ -173,4 +176,14 @@ public class Game implements Runnable
 			e.printStackTrace();
 		}
 	}	
+	
+	public Object getPlayer1()
+	{
+		return player1;
+	}
+	
+	public Object getPlayer2()
+	{
+		return player2;
+	}
 }
