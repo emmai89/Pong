@@ -33,7 +33,7 @@ public class Ball extends Object {
 		{
 			yMove = -yMove;
 		}
-		if(y >= (525 - height))
+		if(y >= (game.getHeight() - height))
 		{
 			yMove = -yMove;
 		}

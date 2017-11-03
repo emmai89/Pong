@@ -9,7 +9,6 @@ public abstract class Object
 	protected int height;
 	protected float x; //position
 	protected float y;
-	private Rectangle bounds;
 	protected float speed;
 
 	

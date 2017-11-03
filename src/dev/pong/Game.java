@@ -28,11 +28,6 @@ public class Game implements Runnable
 	//Input
 	private Input input;
 	
-	/*//Camera
-	private GameCamera gameCamera;
-	
-	//Handler
-	private Handler handler;*/
 	
 	public Game(String title, int width, int height)
 	{
@@ -46,19 +41,10 @@ public class Game implements Runnable
 	{
 		display = new Display(title, width, height);
 		display.getFrame().addKeyListener(input);
-		/*display.getFrame().addMouseListener(mouseManager);
-		display.getFrame().addMouseMotionListener(mouseManager);
-		display.getCanvas().addMouseListener(mouseManager);
-		display.getCanvas().addMouseMotionListener(mouseManager);
-		Assets.init();*/
 		
 		player1 = new Player(10, 300, 20, 100, 1);
 		player2 = new Player(670, 300, 20, 100, 2);
 		ball = new Ball(width/2, height/2, 10, 10, this);
-		
-		/*gameState = new GameState(handler);
-		menuState = new MenuState(handler);
-		State.setState(menuState);*/
 	}
 	
 	private void tick()
@@ -129,21 +115,6 @@ public class Game implements Runnable
 		
 		stop();
 	}
-	
-	/*public KeyManager getKeyManager()
-	{
-		return keyManager;
-	}
-	
-	public MouseManager getMouseManager()
-	{
-		return mouseManager;
-	}
-	
-	public GameCamera getGameCamera()
-	{
-		return gameCamera;
-	}*/
 	
 	public int getWidth() 
 	{
