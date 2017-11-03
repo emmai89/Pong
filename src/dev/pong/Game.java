@@ -4,6 +4,9 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
 import dev.pong.display.Display;
+import dev.pong.input.Input;
+import dev.pong.objects.Object;
+import dev.pong.objects.Player;
 
 public class Game implements Runnable
 {
@@ -17,15 +20,14 @@ public class Game implements Runnable
 	private BufferStrategy bs;
 	private Graphics g;
 	
-	/*//States
-	public State gameState;  //only public for testing
-	public State menuState;
+	//objects
+	Object player1, player2;
+	
 	
 	//Input
-	private KeyManager keyManager;
-	private MouseManager mouseManager;
+	private Input input;
 	
-	//Camera
+	/*//Camera
 	private GameCamera gameCamera;
 	
 	//Handler
@@ -36,19 +38,21 @@ public class Game implements Runnable
 		this.width = width;
 		this.height = height;
 		this.title = title;
-		/*keyManager = new KeyManager();*/
+		this.input = new Input();
 	}
 	
 	private void init()
 	{
 		display = new Display(title, width, height);
-		/*display.getFrame().addKeyListener(keyManager);
-		display.getFrame().addMouseListener(mouseManager);
+		display.getFrame().addKeyListener(input);
+		/*display.getFrame().addMouseListener(mouseManager);
 		display.getFrame().addMouseMotionListener(mouseManager);
 		display.getCanvas().addMouseListener(mouseManager);
 		display.getCanvas().addMouseMotionListener(mouseManager);
 		Assets.init();*/
 		
+		player1 = new Player(10, 300, 20, 100, 1);
+		player2 = new Player(670, 300, 20, 100, 2);
 		
 		/*gameState = new GameState(handler);
 		menuState = new MenuState(handler);
@@ -57,10 +61,11 @@ public class Game implements Runnable
 	
 	private void tick()
 	{
-		/*keyManager.tick();
+		input.tick();
 		
-		if(State.getState() != null)
-			State.getState().tick();*/
+		player1.tick();
+		player2.tick();
+		
 	}
 	
 	private void render()
@@ -76,8 +81,8 @@ public class Game implements Runnable
 		g.clearRect(0, 0, width, height);
 		// Draw here!	
 		
-		/*if(State.getState() != null)
-			State.getState().render(g);*/
+		player1.render(g);
+		player2.render(g);;
 		
 		//End dreawing!
 		bs.show();
