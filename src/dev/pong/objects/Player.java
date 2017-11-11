@@ -11,13 +11,17 @@ public class Player extends Object
 
    float yMove;
    int ID;
+   int score;
+   Ball ball;
 
-   public Player(float x, float y, int width, int height, int ID)
+   public Player(float x, float y, int width, int height, int ID, Ball ball)
    {
       super(x, y, width, height);
       yMove = 0;
       this.ID = ID;
       speed = 5;
+      score = 0;
+      this.ball = ball;
    }
 
    private void getInput()
@@ -43,6 +47,20 @@ public class Player extends Object
          if(Input.up_2)
          {
             yMove = -speed;
+         }
+      }
+      else if (ID == 0)
+      {
+         if((ball.getXmove() > 0))
+         {
+            if(ball.getY() > (y + (height/2)))
+            {
+               yMove = speed;
+            }
+            else if(ball.getY() < (y + (height/2)))
+            {
+               yMove = -speed;
+            }
          }
       }
    }
@@ -81,6 +99,16 @@ public class Player extends Object
    public Rectangle getBounds()
    {
       return new Rectangle((int)x, (int)y, width, height);
+   }
+
+   public int getScore()
+   {
+      return score;
+   }
+
+   public void setScore(int score)
+   {
+      this.score = score;
    }
 
 }

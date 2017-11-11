@@ -25,4 +25,14 @@ public abstract class Object
 
    public abstract Rectangle getBounds();
 
+   public float getX()
+   {
+      return x;
+   }
+
+   public float getY()
+   {
+      return y;
+   }
+
 }

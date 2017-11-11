@@ -9,20 +9,25 @@ import dev.pong.Game;
 public class Ball extends Object
 {
 
+   private final float startSpeed = 3;
+
    private float xMove, yMove;
    private float speed;
    private Game game;
    private boolean out;
+   private Player player1, player2;
 
    public Ball(float x, float y, int width, int height, Game game)
    {
       super(x, y, width, height);
 
-      speed = 3;
+      speed = startSpeed;
       this.xMove = speed;
       this.yMove = speed;
       this.game = game;
       this.out = false;
+      this.player1 = game.getPlayer1();
+      this.player2 = game.getPlayer2();
    }
 
    @Override
@@ -43,12 +48,18 @@ public class Ball extends Object
       }
       if(collision())
       {
-         xMove = (float) -(xMove*1.1);
+         xMove = (float)-(xMove*1.1);
       }
 
-      if(x <= 0 || x >= game.getWidth())
+      if(x <= 0)
       {
          out = true;
+         player2.setScore(player2.getScore() + 1);
+      }
+      if(x >= game.getWidth())
+      {
+         out = true;
+         player1.setScore(player1.getScore() + 1);
       }
 
       y += yMove;
@@ -92,6 +103,42 @@ public class Ball extends Object
    public boolean getOut()
    {
       return out;
+   }
+
+   public void setOut(boolean out)
+   {
+      this.out = out;
+   }
+
+   public Player getPlayer1()
+   {
+      return player1;
+   }
+
+   public Player getPlayer2()
+   {
+      return player2;
+   }
+
+   public void setGame(Game game)
+   {
+      this.game = game;
+      this.player1 = game.getPlayer1();
+      this.player2 = game.getPlayer2();
+   }
+
+   public void reset(int x, int y)
+   {
+      this.x = x;
+      this.y = y;
+      speed = startSpeed;
+      this.xMove = speed;
+      this.yMove = speed;
+   }
+
+   public float getXmove()
+   {
+      return xMove;
    }
 
 }

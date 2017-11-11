@@ -3,17 +3,16 @@ package dev.pong;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
-
 import dev.pong.display.Display;
+import dev.pong.display.UI;
 import dev.pong.input.Input;
 import dev.pong.objects.Ball;
-import dev.pong.objects.Object;
 import dev.pong.objects.Player;
 
 public class Game implements Runnable
 {
+   private UI ui;
+
    private Display display;
    private int width, height;
    public String title;
@@ -24,16 +23,14 @@ public class Game implements Runnable
    private BufferStrategy bs;
    private Graphics g;
 
-   // objects
-   Object player1, player2;
+// objects
+   Player player1, player2, AI;
    Ball ball;
 
    // Input
    private Input input;
 
    private boolean reset;
-
-   private Timer timer;
 
    public Game(String title, int width, int height)
    {
@@ -48,11 +45,15 @@ public class Game implements Runnable
       display = new Display(title, width, height);
       display.getFrame().addKeyListener(input);
 
-      player1 = new Player(10, 300, 20, 100, 1);
-      player2 = new Player(670, 300, 20, 100, 2);
       ball = new Ball(width/2, height/2, 10, 10, this);
+      player1 = new Player(10, 300, 20, 100, 1, ball);
+      /*AI = new Player(10, 300, 20, 100, 0, ball);*/
+      player2 = new Player(670, 300, 20, 100, 0, ball);
+      ball.setGame(this);
+
+      ui = new UI(ball);
       reset = true;
-      timer = new Timer();
+      new Timer();
    }
 
    private void tick()
@@ -62,7 +63,8 @@ public class Game implements Runnable
       ball.tick();
       if(ball.getOut())
       {
-         ball = new Ball(width/2, height/2, 10, 10, this);
+         ball.reset(width/2, height/2);
+         ball.setOut(false);
          reset = true;
       }
       player1.tick();
@@ -85,25 +87,26 @@ public class Game implements Runnable
       ball.render(g);
       player1.render(g);
       player2.render(g);
+      ui.render(g);
 
       if(reset)
       {
          reset = false;
-         timer.scheduleWithFixedDelay(new TimerTask() {
-            public void run() {
-               try
-               {
-                  TimeUnit.SECONDS.sleep( 5 );
-                  System.out.println("sleep");
+         /* timer.scheduleWithFixedDelay(new TimerTask() {
+             public void run() {
+                try
+                {
+                   TimeUnit.SECONDS.sleep( 5 );
+                   System.out.println("sleep");
 
-               }
-               catch( InterruptedException e )
-               {
-                  e.printStackTrace();
-               }
-            }
+                }
+                catch( InterruptedException e )
+                {
+                   e.printStackTrace();
+                }
+             }
 
-         }, 0, 100);
+            }, 0, 100);*/
 
       }
       // End dreawing!
@@ -187,12 +190,12 @@ public class Game implements Runnable
       }
    }
 
-   public Object getPlayer1()
+   public Player getPlayer1()
    {
       return player1;
    }
 
-   public Object getPlayer2()
+   public Player getPlayer2()
    {
       return player2;
    }
