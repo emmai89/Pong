@@ -10,7 +10,6 @@ public class GameState extends State
    public GameState(Game game)
    {
       super(game);
-      // TODO Auto-generated constructor stub
    }
 
    @Override

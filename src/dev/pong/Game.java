@@ -22,6 +22,8 @@ public class Game implements Runnable
 
    private BufferStrategy bs;
    private Graphics g;
+   
+   private Stopwatch timer;
 
 // objects
    Player player1, player2, AI;
@@ -47,17 +49,22 @@ public class Game implements Runnable
 
       ball = new Ball(width/2, height/2, 10, 10, this);
       player1 = new Player(10, 300, 20, 100, 1, ball);
-      /*AI = new Player(10, 300, 20, 100, 0, ball);*/
       player2 = new Player(670, 300, 20, 100, 0, ball);
       ball.setGame(this);
+      
+      timer = new Stopwatch();
 
       ui = new UI(ball);
       reset = true;
       new Timer();
+      
    }
 
    private void tick()
    {
+	  player1.tick();
+	  player2.tick();
+	      
       input.tick();
 
       ball.tick();
@@ -67,8 +74,6 @@ public class Game implements Runnable
          ball.setOut(false);
          reset = true;
       }
-      player1.tick();
-      player2.tick();
 
    }
 
@@ -91,6 +96,16 @@ public class Game implements Runnable
 
       if(reset)
       {
+    	  timer.beginTimer(3);
+    	 /* while(true)  
+    	  {
+        	  input.tick();
+              System.out.println("uiyggg");
+
+        	  if(input.click())
+        		  break;
+          }*/
+    	  
          reset = false;
          /* timer.scheduleWithFixedDelay(new TimerTask() {
              public void run() {

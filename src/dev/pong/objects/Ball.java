@@ -9,8 +9,8 @@ import dev.pong.Game;
 public class Ball extends Object
 {
 
-   private final float startSpeed = 3;
-
+	 private final float startSpeed = 3;
+	
    private float xMove, yMove;
    private float speed;
    private Game game;
@@ -48,7 +48,14 @@ public class Ball extends Object
       }
       if(collision())
       {
-         xMove = (float)-(xMove*1.1);
+    	  if(Math.abs(xMove) < 10)
+    	  {
+ 	         xMove = (float)-(xMove*1.1);
+    	  }
+    	  else
+    	  {
+    		  xMove = -xMove;
+    	  }
       }
 
       if(x <= 0)
@@ -104,10 +111,10 @@ public class Ball extends Object
    {
       return out;
    }
-
+   
    public void setOut(boolean out)
    {
-      this.out = out;
+	   this.out = out;
    }
 
    public Player getPlayer1()
@@ -122,23 +129,24 @@ public class Ball extends Object
 
    public void setGame(Game game)
    {
-      this.game = game;
-      this.player1 = game.getPlayer1();
-      this.player2 = game.getPlayer2();
+	   this.game = game;
+	   this.player1 = game.getPlayer1();
+       this.player2 = game.getPlayer2();
+       this.xMove = speed;
+       this.yMove = speed;
    }
-
+   
    public void reset(int x, int y)
    {
-      this.x = x;
-      this.y = y;
-      speed = startSpeed;
-      this.xMove = speed;
-      this.yMove = speed;
+	   this.x = x;
+	   this.y = y;
+	   speed = startSpeed;
+	      this.xMove = speed;
+	      this.yMove = speed;
    }
-
+   
    public float getXmove()
    {
-      return xMove;
+	   return xMove;
    }
-
 }

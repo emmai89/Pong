@@ -27,6 +27,16 @@ public class Input implements KeyListener
          System.exit(1);
       }
    }
+   
+   public boolean click()
+   {
+	   boolean yas = false;
+	   if(up_2 || down_2 || up_1 || down_1 || esc)
+	   {
+		   yas = true;
+	   }
+	   return yas;
+   }
 
    @Override
    public void keyTyped(KeyEvent e)
